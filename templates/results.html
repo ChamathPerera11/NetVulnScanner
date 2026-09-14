@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Scan Results</title>
+
+</head>
+
+<body>
+
+    <h1>Scan Results</h1>
+
+    <table border="1">
+
+        <tr>
+            <th>Host</th>
+            <th>Port</th>
+            <th>Protocol</th>
+            <th>State</th>
+            <th>Service</th>
+            <th>Product</th>
+            <th>Version</th>
+        </tr>
+
+        {% for result in results %}
+
+        <tr>
+
+            <td>{{ result[0] }}</td>
+            <td>{{ result[1] }}</td>
+            <td>{{ result[2] }}</td>
+            <td>{{ result[3] }}</td>
+            <td>{{ result[4] }}</td>
+            <td>{{ result[5] }}</td>
+            <td>{{ result[6] }}</td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    <br>
+
+    <a href="/">
+        Back
+    </a>
+
+</body>
+
+</html>
