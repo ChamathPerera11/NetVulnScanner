@@ -1,19 +1,12 @@
 <!DOCTYPE html>
-
 <html>
-
 <head>
-
     <title>Scan Results</title>
-
 </head>
-
 <body>
-
     <h1>Scan Results</h1>
 
     <table border="1">
-
         <tr>
             <th>Host</th>
             <th>Port</th>
@@ -22,32 +15,26 @@
             <th>Service</th>
             <th>Product</th>
             <th>Version</th>
+            <th>Risk</th>
+            <th>Description</th>
         </tr>
 
         {% for result in results %}
-
         <tr>
-
-            <td>{{ result[0] }}</td>
-            <td>{{ result[1] }}</td>
-            <td>{{ result[2] }}</td>
-            <td>{{ result[3] }}</td>
-            <td>{{ result[4] }}</td>
-            <td>{{ result[5] }}</td>
-            <td>{{ result[6] }}</td>
-
+            <td>{{ result.host }}</td>
+            <td>{{ result.port }}</td>
+            <td>{{ result.protocol }}</td>
+            <td>{{ result.state }}</td>
+            <td>{{ result.service }}</td>
+            <td>{{ result.product }}</td>
+            <td>{{ result.version }}</td>
+            <td>{{ result.risk }}</td>
+            <td>{{ result.description }}</td>
         </tr>
-
         {% endfor %}
-
     </table>
 
     <br>
-
-    <a href="/">
-        Back
-    </a>
-
+    <a href="/">Back</a>
 </body>
-
 </html>

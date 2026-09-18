@@ -1,40 +1,22 @@
 <!DOCTYPE html>
-
 <html>
-
 <head>
-
     <title>NetVuln Scanner</title>
-
 </head>
-
 <body>
-
     <h1>Network Vulnerability Scanner</h1>
 
+    {% if error %}
+    <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
     <form action="/scan" method="POST">
-
         <label>Target IP:</label>
-
-        <input
-            type="text"
-            name="target"
-            placeholder="192.168.1.1"
-            required
-        >
-
-        <button type="submit">
-            Start Scan
-        </button>
-
+        <input type="text" name="target" placeholder="192.168.1.1" required>
+        <button type="submit">Start Scan</button>
     </form>
 
     <br>
-
-    <a href="/history">
-        View Scan History
-    </a>
-
+    <a href="/history">View Scan History</a>
 </body>
-
 </html>

@@ -68,17 +68,20 @@ def save_result(result, vulnerability):
 def get_results():
 
     conn = sqlite3.connect(DATABASE)
+    conn.row_factory = sqlite3.Row
 
     cursor = conn.cursor()
 
     cursor.execute("""
-        SELECT *
+        SELECT host, port, protocol, state, service, product, version, risk, description
         FROM scans
         ORDER BY id DESC
     """)
 
-    results = cursor.fetchall()
+    rows = cursor.fetchall()
 
     conn.close()
+
+    results = [dict(row) for row in rows]
 
     return results

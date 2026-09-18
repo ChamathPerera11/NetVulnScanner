@@ -1,3 +1,5 @@
+import re
+
 from flask import Flask, render_template, request
 
 from scanner import scan_target
@@ -9,6 +11,8 @@ app = Flask(__name__)
 
 create_database()
 
+TARGET_PATTERN = re.compile(r"^[A-Za-z0-9.:_-]{1,255}$")
+
 
 @app.route("/")
 def index():
@@ -19,11 +23,25 @@ def index():
 @app.route("/scan", methods=["POST"])
 def scan():
 
-    target = request.form["target"]
+    target = request.form.get("target", "").strip()
 
-    results = scan_target(target)
+    if not TARGET_PATTERN.match(target):
+        return render_template(
+            "index.html",
+            error="Enter a valid IP address or hostname (letters, numbers, dots, colons, hyphens only)."
+        ), 400
 
-    for result in results:
+    try:
+        scan_results = scan_target(target)
+    except Exception as exc:
+        return render_template(
+            "index.html",
+            error=f"Scan failed: {exc}"
+        ), 500
+
+    results = []
+
+    for result in scan_results:
 
         vulnerability = check_vulnerability(result)
 
@@ -31,6 +49,8 @@ def scan():
             result,
             vulnerability
         )
+
+        results.append({**result, **vulnerability})
 
     return render_template(
         "results.html",
@@ -51,6 +71,5 @@ def history():
 
 if __name__ == "__main__":
 
-    app.run(
-        debug=True
-    )
+    import os
+    app.run(debug=os.environ.get("FLASK_DEBUG") == "1")
